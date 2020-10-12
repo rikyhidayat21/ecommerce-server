@@ -2,7 +2,7 @@ function errHandler(err, req, res, next) {
   let errors = []
   let statusCode = 500
 
-  console.log(err, '<< error sekarang')
+  console.log(err, '<< error sekarang di error handler')
 
   switch (err.name) {
     case 'SequelizeUniqueConstraintError' :

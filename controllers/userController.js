@@ -5,7 +5,7 @@ const { generateToken } = require('../helpers/jwt')
 class UserController {
   static login(req, res, next) {
     const { email, password } = req.body
-    console.log(req.body, '<<< ini req body usercontroller')
+    // console.log(req.body, '<<< ini req body usercontroller')
     User.findOne({
       where : { email }
     })
