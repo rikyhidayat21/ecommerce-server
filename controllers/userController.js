@@ -11,9 +11,9 @@ class UserController {
     })
       .then(user => {
         // console.log(user, '<< ini user di then')
-        if(!user) throw { msg : 'invalid email or password'}
+        if(!user) throw { msg : 'invalid email or password', statusCode: 400}
         let comparePassword = comparePass(password, user.password)
-        if(!comparePassword) throw { msg: 'invalid email or password'}
+        if(!comparePassword) throw { msg: 'invalid email or password', statusCode: 400}
         let payLoad = {
           id: user.id,
           email: user.email
@@ -23,9 +23,9 @@ class UserController {
         res.status(200).json({ access_token })
       })
       .catch(err =>{
-        console.log(err, '<<< error login user controller')
+        // console.log(err, '<<< error login user controller')
         next(err)
-      } )
+      })
   }
 }
 

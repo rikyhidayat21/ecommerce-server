@@ -10,7 +10,6 @@ let user_data = {
   role: 'admin'
 }
 
-let access_token = ''
 
 beforeAll(function(done) { //
   User.create({
@@ -43,7 +42,7 @@ describe('Login / Success Case', () => {
       .end((err, res) => {
         if(err) throw err;
         else {
-          console.log(res.body, '<<<resbody di test login')
+          // console.log(res.body, '<<<resbody di test login')
           expect(res.status).toBe(200)
           expect(res.body).toHaveProperty('access_token', expect.any(String))
           expect(res.body).not.toHaveProperty('email')
@@ -55,22 +54,43 @@ describe('Login / Success Case', () => {
   })
 })
 
-// ketika pass salah
-// ketika email salah
-
-.send({
-  email: 'admin@mail.com',
-  password: 'salahinaja'
-})
-/*
-  errors: [
-    'invalid email or password'
-  ]
-
-*/
-
-
-.send({
-  email: 'adminiwww@mail.com',
-  password: 'kumpay'
+describe('Login / Error Case', () => {
+  test('Failed because invalid email', (done) => {
+    request(app)
+      .post('/login')
+      .send({
+        email: 'salahemail@mail.com',
+        password: 'kumpay'
+      })
+      .end((err, res) => {
+        if(err) throw err;
+        else {
+          const errors = ['invalid email or password']
+          // console.log(res.body, '<<< errors login user test')
+          expect(res.status).toBe(400)
+          expect(res.body).toHaveProperty("errors", expect.any(Array))
+          expect(res.body.errors).toEqual(errors);
+          
+          done()
+        }
+      })
+  })
+  test('Failed because invalid password', (done) => {
+    request(app)
+      .post('/login')
+      .send({
+        email: 'admin@mail.com',
+        password: 'kumis'
+      })
+      .end((err, res) => {
+        const errors = ['invalid email or password']
+        if(err) throw err;
+        else {
+          expect(res.status).toBe(400)
+          expect(res.body).toHaveProperty('errors', expect.any(Array))
+          expect(res.body.errors).toEqual(errors);
+          done()
+        }
+      })
+  })
 })
