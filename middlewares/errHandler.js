@@ -9,14 +9,14 @@ function errHandler(err, req, res, next) {
       errors.push('Email already used')
       statusCode = 400
       break;
-    case 'AuthorizationFailed':
-      errors.push('Failed to authorize')
-      statusCode = 403
-      break;
     case 'JsonWebTokenError':
     case 'AuthenticationFailed':
       errors.push('Failed to authenticate')
       statusCode = 401
+      break;
+    case 'AuthorizationFailed':
+      errors.push('Failed to authorize')
+      statusCode = 403
       break;
     case 'SequelizeValidationError':
       err.errors.forEach(el => {

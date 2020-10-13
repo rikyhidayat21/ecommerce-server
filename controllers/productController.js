@@ -22,6 +22,66 @@ class ProductController {
         next(err)
       })
   }
+
+  static update(req, res, next) {
+    const { id } = req.params
+    Product.findByPk(id)
+      .then(product => {
+        // console.log(product, '<<< update populate find by id di controller product')
+        if (!product) throw { err: 'product not found', statusCode: 404}
+        return product.update({
+          ...product,
+          ...req.body
+        })
+      })
+      .then(product => {
+        // console.log(product, '<<< berhasil update di controller product')
+        res.status(200).json(product)
+      })
+      .catch(err => {
+        // console.log(err, '<<< error update di product controller')
+        next(err)
+      })
+  }
+
+  static findAll(req, res, next) {
+    Product.findAll({
+      sort: [['id', 'DESC']]
+    })
+      .then(product => {
+        // console.log(product, '<<< find all product di controller')
+        product = product.map(el => {
+          return {
+            id: el.id,
+            name: el.name,
+            image_url: el.image_url,
+            price: el.price,
+            stock: el.stock
+          }
+        })
+        res.status(200).json(product)
+      })
+      .catch(err => {
+        // console.log(err, '<<< error find all di controller')
+        next(err)
+      })
+  } 
+
+  static deleteProduct(req, res, next) {
+    const { id } = req.params
+    Product.findByPk(id)
+      .then(product => {
+        // console.log(product, '<<< delete product di controller')
+        if (!product) throw { msg: 'product not found', statusCode: 404}
+        product.destroy()
+        res.status(200).json({ message: 'success delete product'})
+      })
+      .catch(err => {
+        console.log(err, '<<< error delete di controller')
+        next(err)
+      })
+  }
+
 }
 
 module.exports = ProductController
