@@ -67,6 +67,14 @@ class ProductController {
       })
   } 
 
+  static findById(req, res, next) {
+    Product.findByPk(req.params.id) 
+      .then(product => {
+        if (!product) throw { msg: 'product not found', statusCode: 404}
+        res.status(200).json(product)
+      })
+      .catch(err => next(err))
+  }
   static deleteProduct(req, res, next) {
     const { id } = req.params
     Product.findByPk(id)

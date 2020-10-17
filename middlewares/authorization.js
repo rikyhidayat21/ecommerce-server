@@ -1,7 +1,7 @@
 
 async function authorization(req, res, next) {
   try {
-    console.log(req.userData.role, '<<< req userData role di middleware authorization')
+    // console.log(req.userData, '<<< req userData role di middleware authorization')
     if (req.userData.role !== 'admin') throw { name: "AuthorizationFailed"}
     next()
   } catch (err) {

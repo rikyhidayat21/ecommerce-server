@@ -10,7 +10,7 @@ async function authentication(req, res, next) {
       where : { email: decoded.email }
     })
     if(!user) throw { msg: 'authentication failed', statusCode: 401}
-    req.userData = decoded
+    req.userData = user
     next()
   } catch (err) {
     next(err)
