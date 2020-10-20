@@ -51,6 +51,51 @@ _Response (500 - Internal Server Error)_
   ]
 }
 ```
+
+## POST /register
+
+> Register user
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "email": "<string>",
+  "password": "<string>"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "<string>",
+  "id": <integer>,
+  "email": "<string>",
+  "role": "<string>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "errors": [
+      "email is required",
+      "password is required"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "internal server error"
+  ]
+}
+```
 ---
 
 &nbsp;
@@ -324,6 +369,264 @@ _Response (500 - Internal Server Error)_
 ## DELETE /products/:id
 
 > Delete product by id
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```
+id: <integer>
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "message": "delete product success"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "authentication failed"
+  ]
+}
+```
+
+_Response (403 - Forbidden)_
+```
+{
+  "errors": [
+    "authorization failed"
+  ]
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "errors": [
+    "product not found"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "internal server error"
+  ]
+}
+```
+---
+## Product Endpoints
+---
+
+## POST /carts
+
+> Create new carts
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "productId": "<integer>",
+  "totalItem": "<integer>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "msg": "success add product to cart",
+  "data": {
+      "status": false,
+      "id": 9,
+      "productId": 1,
+      "userId": 2,
+      "quantity": 3,
+      "updatedAt": "2020-10-20T13:45:13.877Z",
+      "createdAt": "2020-10-20T13:45:13.877Z"
+  }
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "errors": [
+    "name is required",
+    "image_url is required",
+    "price is required",
+    "stock is required",
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "internal server error"
+  ]
+}
+```
+---
+
+## GET /carts
+
+> Get all carts
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+[
+  {
+    "id": 8,
+    "productId": 2,
+    "userId": 2,
+    "quantity": 669,
+    "Product": {
+        "id": 2,
+        "name": "kaos main",
+        ...
+    },
+    "User": {
+        "id": 2,
+        "email": "mamad@mail.com",
+        ...
+    }
+  },
+  ...
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "authentication failed"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "internal server error"
+  ]
+}
+```
+---
+
+## PUT /carts/:id
+
+> Update carts by id
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```
+id: <string>
+```
+
+_Request Body_
+```
+{
+  "quantity": "<integer>"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "cart": [
+      1
+  ],
+  "msg": "success update cart"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "cart": [
+      0
+  ],
+  "msg": "success update cart"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "authentication failed"
+  ]
+}
+```
+
+_Response (403 - Forbidden)_
+```
+{
+  "errors": [
+    "authorization failed"
+  ]
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "errors": [
+    "product not found"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "internal server error"
+  ]
+}
+```
+---
+
+## DELETE /carts/:id
+
+> Delete cart by id
 _Request Header_
 ```
 {

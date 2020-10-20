@@ -25,18 +25,3 @@ async function authorization(req, res, next) {
 }
 
 module.exports = authorization
-
-// let { id } = req.params
-//     const cart = await Cart.findByPk(id)
-    
-//     if (!cart) {
-//       throw { msg: 'cart not found'}
-//     } else if ( cart.userId === req.userData.id ) {
-//       next ()
-//     } else {
-//       if (req.userData.role !== 'admin') {
-//         throw { name: "AuthorizationFailed"}
-//       } else {
-//         throw { msg: 'you are not authorization'}
-//       }
-//     }
