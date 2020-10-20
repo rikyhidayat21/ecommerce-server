@@ -11,6 +11,7 @@ async function authentication(req, res, next) {
     })
     if(!user) throw { msg: 'authentication failed', statusCode: 401}
     req.userData = user
+    console.log(req.userData.id, '<=== req.userData.id di auth')
     next()
   } catch (err) {
     next(err)
