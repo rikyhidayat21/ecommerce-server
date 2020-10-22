@@ -103,7 +103,7 @@ class CartController {
     //   where: { id }
     // })
       .then(cart => {
-        console.log(cart, '<=== cart di delete controller')
+        // console.log(cart, '<=== cart di delete controller')
         if (!cart) throw { msg: 'cart not found'}
         cart.destroy()
         res.status(200).json({
