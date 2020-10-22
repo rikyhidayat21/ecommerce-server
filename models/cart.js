@@ -25,7 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     quantity: {
       type: DataTypes.INTEGER,
-      defaultValue: 1
+      defaultValue: 1,
+      validate: {
+        min: {args: [0], msg: 'quantity must be a positive integer'}
+      }
     },
     status: {
       type: DataTypes.BOOLEAN,
